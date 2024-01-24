@@ -1,16 +1,24 @@
-export const add_counter=(data)=>{
-    return{
-         type:"INCREMENT",
-         payload:{
-           data:data
-         }
-    }
-}
-export const reduce_counter=(data)=>{
-    return{
-         type:"DECREMENT",
-         payload:{
-         data:data
-         }
-    }
-}
+export const add_counter = (data) => {
+  return {
+    type: "INCREMENT",
+    payload: {
+      data: data,
+    },
+  };
+};
+export const reduce_counter = (data) => {
+  return {
+    type: "DECREMENT",
+    payload: {
+      data: data,
+    },
+  };
+};
+export const loading = (data) => {
+  return {
+    type: "LOADING_STATUS",
+    payload: {
+      data: data,
+    },
+  };
+};

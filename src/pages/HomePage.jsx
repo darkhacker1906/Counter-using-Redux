@@ -1,54 +1,56 @@
-
-import React,{useState,useEffect} from 'react'
-import { useSelector,useDispatch } from 'react-redux'
-import { add_counter, reduce_counter } from '../redux/Action';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { add_counter, loading, reduce_counter } from "../redux/Action";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function HomePage() {
-  var count=useSelector((state)=>state.count);
-  var loader=useSelector((state)=>state.loader);
-  console.log(loader);
-  // const [loading,setLoading]=useState(false);
-  // const handleAdd=()=>{
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //     dispatch(add_counter());
-  //   }, 1000);
-   
-  // }
-  const handleAdd=()=>{
-    
-    setTimeout(()=>{
-      loader=true;
-     },1000)
-    //  console.log(loader);
+  var count = useSelector((state) => state.count);
+  var loader = useSelector((state) => state.loader);
+
+  var dispatch = useDispatch();
+  const handleAdd = () => {
     dispatch(add_counter());
-  }
+  };
 
-  const handleReduce=()=>{
-    setLoading(true);
+  const handleReduce = () => {
+    dispatch(reduce_counter());
+  };
+
+  useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
-      dispatch(reduce_counter());
-    }, 1000);
-   
-  }
+      dispatch(loading());
+    }, 500);
+  }, [handleAdd, handleReduce]);
 
-  var dispatch=useDispatch();
-      return (
-     <div>
-         <h2 style={{textAlign:"center"}}>Counter app</h2>
-         <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <button onClick={handleAdd} style={{backgroundColor:"#7373e9"}}>+</button>
-      Counter {!loader && count}
-      {loader && <CircularProgress/>}
-       <button disabled={ count<1}onClick={handleReduce} style={{marginLeft:"10px",backgroundColor:"#7373e9"}}>-</button></div>
+  return (
+    <div>
+      <h2 style={{ textAlign: "center", marginBottom:"10%",fontSize:"30px"}}>Counter app</h2>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height:"40px"
       
-      </div>
-   
+        }}
+      >
+        <button onClick={handleAdd} style={{ backgroundColor: "#cccccc",marginRight:"20px",fontSize:"20px",fontWeight:"bold"}}>
+          +
+        </button>
 
-  )
+        <div style={{fontSize: "23px",width: "50px",textAlign:"center"}}>
+          {loader ? <CircularProgress /> :  count }
+        </div>
+        <button
+          disabled={count < 1}
+          onClick={handleReduce}
+          style={{ marginLeft: "20px", backgroundColor: "#cccccc",fontSize:"20px",fontWeight:"bold" }}
+        >
+          -
+        </button>
+      </div>
+    </div>
+  );
 }
 
-export default HomePage
+export default HomePage;
